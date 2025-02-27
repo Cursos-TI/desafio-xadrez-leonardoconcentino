@@ -90,16 +90,26 @@ void rook(int i){
     }
 }
 
-void queen(){
+void queen(int i){
     
-    int i = 0;
     int j = 0;
 
     if(isDiagonal == 1){
-        bishop(squares1);
+        if (i > 0){
+        
+            printf("%s\n", firstDirection);
+            printf("%s\n", secondDirection);
+            
+            queen(i - 1);
+        }
     }
     else{
-        rook(squares1);
+        if (i > 0){
+        
+            printf("%s\n", firstDirection);
+
+            queen(i - 1);
+        }
     }
 }
 
@@ -109,7 +119,7 @@ void king(){
     printf("Movement:\n");
 
     if(isDiagonal == 1){
-        printf("%s-%s\n", firstDirection, secondDirection);
+        printf("%s\n%s\n", firstDirection, secondDirection);
     }
     else{
         printf("%s\n", firstDirection);
@@ -395,7 +405,7 @@ void chessGame(){
         break;
 
     case 5:
-        queen();
+        queen(squares1);
         break;
 
     case 6:
@@ -424,19 +434,6 @@ int main() {
         getchar();
 
     } while (strcmp(option, "y") == 0);
-    
-    
-
-    // Nível Aventureiro - Movimentação do Cavalo
-    // Sugestão: Utilize loops aninhados para simular a movimentação do Cavalo em L.
-    // Um loop pode representar a movimentação horizontal e outro vertical.
-
-    // Nível Mestre - Funções Recursivas e Loops Aninhados
-    // Sugestão: Substitua as movimentações das peças por funções recursivas.
-    // Exemplo: Crie uma função recursiva para o movimento do Bispo.
-
-    // Sugestão: Implemente a movimentação do Cavalo utilizando loops com variáveis múltiplas e condições avançadas.
-    // Inclua o uso de continue e break dentro dos loops.
 
     return 0;
 }
