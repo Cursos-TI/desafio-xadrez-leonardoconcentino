@@ -8,73 +8,114 @@
 int piece = 0;
 int squares1 = 0;
 int squares2 = 0;
-char firstDirection [6];
-char secondDirection [6];
-char typeOfMovement [8];
+char firstDirection [8];
+char secondDirection [8];
+int isDiagonal = 0;
 
 void pawn(){
 
+    printf("\n");
+    printf("Movement:\n");
     if (squares1 == 1)
         printf("Up\n");
     else
         printf("Up\nUp\n");
-
+    
+    printf("\n");
 }
 
 void knight(){
 
-    for (int i = 0; i < squares1; i++)
-    {
-        printf("%s\n", firstDirection);
-    }
+    printf("\n");
+    printf("Movement:\n");
 
-    for (int i = 0; i < squares2; i++)
-    {
-        printf("%s\n", secondDirection);
-    }
-    
-    
-}
+    if(squares1 > squares2){
 
-void bishop(){
+        int j = 0;
+        for (int i = 0; i < squares1; i++){
+            
+            for (j; j < squares2; j++)
+            {
+                printf("%s\n", secondDirection);
+            }
+            
+            printf("%s\n", firstDirection);
 
-    int i = 0;
-    
-    do{
+        }
 
-        printf("%s-%s\n", firstDirection, secondDirection);
-        i++;
+        printf("\n");
 
     }
-    while(i < squares1);
-}
+    else{
 
-void rook(){
+        int j = 1;
+        int i = 0;
+
+        do{
+
+            while(j <= squares1){
+                printf("%s\n", firstDirection);
+                j++;
+            }
+
+            printf("%s\n", secondDirection);
+            i++;
+        }
+        while(i < squares2);
+    }
 
     printf("\n");
-    for(int i = 0; i < squares1; i++){
 
+} 
+
+void bishop(int i){
+
+    if (i > 0){
+        
         printf("%s\n", firstDirection);
+        printf("%s\n", secondDirection);
+        
+        bishop(i - 1);
+    }
 
+    
+}
+
+void rook(int i){
+
+    if (i > 0){
+        
+        printf("%s\n", firstDirection);
+        rook(i - 1);
     }
 }
 
 void queen(){
     
     int i = 0;
-    
-    while(i < squares1){
+    int j = 0;
 
-        printf("Left\n");
-        i++;
-
+    if(isDiagonal == 1){
+        bishop(squares1);
     }
-
+    else{
+        rook(squares1);
+    }
 }
 
 void king(){
+
+    printf("\n");
+    printf("Movement:\n");
+
+    if(isDiagonal == 1){
+        printf("%s-%s\n", firstDirection, secondDirection);
+    }
+    else{
+        printf("%s\n", firstDirection);
+    }
     
-    printf("%s\n", typeOfMovement);
+    printf("\n");
 
 }
 
@@ -148,25 +189,25 @@ void collectData(){
 
     case 3:
         
-        printf("\nTo which direction would you like to go first? (Left or Right)\n");
+        printf("\nTo which direction would you like to go first? (Up or Down)\n");
         printf("Direction: ");
         scanf("%s", firstDirection); //remember after to make it case insensitive
         
-        while(strcmp(firstDirection, "left") != 0 && strcmp(firstDirection, "right") != 0){
+        while(strcmp(firstDirection, "up") != 0 && strcmp(firstDirection, "down") != 0){
             
-            printf("\nIncorrect direction. Please, type 'left' or 'right'.\nTo which direction would you like to go first?\n");
+            printf("\nIncorrect direction. Please, type 'up' or 'down'.\nTo which direction would you like to go first?\n");
             printf("Direction: ");
             scanf("%s", firstDirection);
 
         }
 
-        printf("\nTo which direction would you like to go second? (Up or Down)\n");
+        printf("\nTo which direction would you like to go second? (Right or Left)\n");
         printf("Direction: ");
         scanf("%s", secondDirection); //remember after to make it case insensitive
         
-        while(strcmp(secondDirection, "up") != 0 && strcmp(secondDirection, "down") != 0){
+        while(strcmp(secondDirection, "right") != 0 && strcmp(secondDirection, "left") != 0){
             
-            printf("\nIncorrect direction. Please, type 'up' or 'down'.\nTo which direction would you like to go second?\n");
+            printf("\nIncorrect direction. Please, type 'right' or 'left'.\nTo which direction would you like to go second?\n");
             printf("Direction: ");
             scanf("%s", secondDirection);
 
@@ -217,37 +258,39 @@ void collectData(){
         getchar();
         printf("\nTo which direction would you like to go? (Up, Down, Left, Right or Diagonal)\n");
         printf("Direction: ");
-        scanf("%s", typeOfMovement);
+        scanf("%s", firstDirection);
 
-        while (strcmp(typeOfMovement, "left") != 0 && strcmp(typeOfMovement, "right") != 0 && strcmp(typeOfMovement, "up") != 0 && strcmp(typeOfMovement, "down") != 0 && strcmp(typeOfMovement, "diagonal") != 0){
+        while (strcmp(firstDirection, "left") != 0 && strcmp(firstDirection, "right") != 0 && strcmp(firstDirection, "up") != 0 && strcmp(firstDirection, "down") != 0 && strcmp(firstDirection, "diagonal") != 0){
             
             printf("\nIncorrect direction. Please, type 'left', 'right', 'up', 'down' or 'diagonal'.\nTo which direction would you like to go?\n");
             printf("Direction: ");
-            scanf("%s", typeOfMovement);
+            scanf("%s", firstDirection);
 
         }
 
-        if(strcmp(typeOfMovement, "diagonal") == 0 ){
+        if(strcmp(firstDirection, "diagonal") == 0 ){
            
-            printf("\nTo which direction would you like to go first? (Left or Right)\n");
+            isDiagonal = 1;
+
+            printf("\nTo which direction would you like to go first? (Up or Down)\n");
             printf("Direction: ");
             scanf("%s", firstDirection); //remember after to make it case insensitive
             
-            while(strcmp(firstDirection, "left") != 0 && strcmp(firstDirection, "right") != 0){
+            while(strcmp(firstDirection, "up") != 0 && strcmp(firstDirection, "down") != 0){
                 
-                printf("\nIncorrect direction. Please, type 'left' or 'right'.\nTo which direction would you like to go first?\n");
+                printf("\nIncorrect direction. Please, type 'up' or 'down'.\nTo which direction would you like to go first?\n");
                 printf("Direction: ");
                 scanf("%s", firstDirection);
 
             }
 
-            printf("\nTo which direction would you like to go second? (Up or Down)\n");
+            printf("\nTo which direction would you like to go second? (Right or Left)\n");
             printf("Direction: ");
             scanf("%s", secondDirection); //remember after to make it case insensitive
             
-            while(strcmp(secondDirection, "up") != 0 && strcmp(secondDirection, "down") != 0){
+            while(strcmp(secondDirection, "right") != 0 && strcmp(secondDirection, "left") != 0){
                 
-                printf("\nIncorrect direction. Please, type 'up' or 'down'.\nTo which direction would you like to go second?\n");
+                printf("\nIncorrect direction. Please, type 'right' or 'left'.\nTo which direction would you like to go second?\n");
                 printf("Direction: ");
                 scanf("%s", secondDirection);
 
@@ -284,37 +327,39 @@ void collectData(){
         getchar();
         printf("\nTo which direction would you like to go? (Up, Down, Left, Right or Diagonal)\n");
         printf("Direction: ");
-        scanf("%s", typeOfMovement);
+        scanf("%s", firstDirection);
 
-        while (strcmp(typeOfMovement, "left") != 0 && strcmp(typeOfMovement, "right") != 0 && strcmp(typeOfMovement, "up") != 0 && strcmp(typeOfMovement, "down") != 0 && strcmp(typeOfMovement, "diagonal") != 0){
+        while (strcmp(firstDirection, "left") != 0 && strcmp(firstDirection, "right") != 0 && strcmp(firstDirection, "up") != 0 && strcmp(firstDirection, "down") != 0 && strcmp(firstDirection, "diagonal") != 0){
             
             printf("\nIncorrect direction. Please, type 'left', 'right', 'up', 'down' or 'diagonal'.\nTo which direction would you like to go?\n");
             printf("Direction: ");
-            scanf("%s", typeOfMovement);
+            scanf("%s", firstDirection);
 
         }
 
-        if(strcmp(typeOfMovement, "diagonal") == 0 ){
-        
-            printf("\nTo which direction would you like to go first? (Left or Right)\n");
+        if(strcmp(firstDirection, "diagonal") == 0 ){
+            
+            isDiagonal = 1;
+
+            printf("\nTo which direction would you like to go first? (Up or Down)\n");
             printf("Direction: ");
             scanf("%s", firstDirection); //remember after to make it case insensitive
             
-            while(strcmp(firstDirection, "left") != 0 && strcmp(firstDirection, "right") != 0){
+            while(strcmp(firstDirection, "up") != 0 && strcmp(firstDirection, "down") != 0){
                 
-                printf("\nIncorrect direction. Please, type 'left' or 'right'.\nTo which direction would you like to go first?\n");
+                printf("\nIncorrect direction. Please, type 'up' or 'down'.\nTo which direction would you like to go first?\n");
                 printf("Direction: ");
                 scanf("%s", firstDirection);
 
             }
 
-            printf("\nTo which direction would you like to go second? (Up or Down)\n");
+            printf("\nTo which direction would you like to go second? (Right or Left)\n");
             printf("Direction: ");
             scanf("%s", secondDirection); //remember after to make it case insensitive
             
-            while(strcmp(secondDirection, "up") != 0 && strcmp(secondDirection, "down") != 0){
+            while(strcmp(secondDirection, "right") != 0 && strcmp(secondDirection, "left") != 0){
                 
-                printf("\nIncorrect direction. Please, type 'up' or 'down'.\nTo which direction would you like to go second?\n");
+                printf("\nIncorrect direction. Please, type 'right' or 'left'.\nTo which direction would you like to go second?\n");
                 printf("Direction: ");
                 scanf("%s", secondDirection);
 
@@ -342,11 +387,11 @@ void chessGame(){
         break;
 
     case 3:
-        bishop();
+        bishop(squares1);
         break;
 
     case 4:
-        rook();
+        rook(squares1);
         break;
 
     case 5:
@@ -366,8 +411,21 @@ void chessGame(){
 
 int main() {
     
-    collectData();
-    chessGame();
+    char option [1];
+    do
+    {   
+        isDiagonal = 0;
+        collectData();
+        chessGame();
+
+        printf("Would you like to continue playing? (Y/N)\n");
+        printf("Option: ");
+        scanf("%s", option);
+        getchar();
+
+    } while (strcmp(option, "y") == 0);
+    
+    
 
     // Nível Aventureiro - Movimentação do Cavalo
     // Sugestão: Utilize loops aninhados para simular a movimentação do Cavalo em L.
